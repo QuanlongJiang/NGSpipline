@@ -1,0 +1,1 @@
+STAR --runMode genomeGenerate --genomeDir ./ --genomeFastaFiles ../GRCh38.p12.genome.fa --runThreadN 20 --limitGenomeGenerateRAM 60000000000 --sjdbOverhang 149 --sjdbGTFfile ../gencode.v31.annotation.gtf
