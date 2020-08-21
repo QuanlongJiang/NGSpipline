@@ -180,5 +180,6 @@ if __name__ == '__main__':
     pathin = ''
     suffix = '*.txt'
     go_enrich('c',pathin,suffix) #c: custom background, d: default background
+    result_path = 'Wb_custom'
     go_plot(result_path) # enrich result files path
     
