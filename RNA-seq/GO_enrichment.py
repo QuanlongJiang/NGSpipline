@@ -156,7 +156,7 @@ def plot_func(f, numbercut=10, xlabel="-log10(p)", title="Enriched GO Terms",wid
     plt.tight_layout()
     plt.savefig( fo )
 
-def main(ifbg,pathin,suffix):   # ifbg = 'd' # default; coustom
+def go_enrich(ifbg,pathin,suffix):   # ifbg = 'd' # default; coustom
     for f_term in term_list:
         if ifbg == 'd':
             term_dict,bg,termname = getdbg(f_term)
@@ -170,11 +170,15 @@ def main(ifbg,pathin,suffix):   # ifbg = 'd' # default; coustom
         dic_lstin = getin(bg,pathin,suffix)
         Parallel(n_jobs = 8)(delayed(para)(tag,dic_lstin,term_dict,bg,M,patho,termname) for tag in dic_lstin)
 
+def go_plot(pathin):
+    fs = glob.glob('{}/*.txt'.format(pathin))
+    [plot_func(f) for f in fs]
+
 if __name__ == '__main__':
     bg_file = '../background.txt'
     term_list = glob.glob('../../database/Wb.GO') 
     pathin = ''
     suffix = '*.txt'
-    #main('c',pathin,suffix) #c: custom background, d: default background
-    fs = glob.glob('Wb_custombg/*txt')
-    [plot_func(f) for f in fs]
+    go_enrich('c',pathin,suffix) #c: custom background, d: default background
+    go_plot(result_path) # enrich result files path
+    
