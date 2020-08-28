@@ -39,7 +39,12 @@ def mapping_func(prefix, fqs):
         os.makedirs(out_dir)
     prefix = out_dir + prefix + '_'
     bam = prefix + 'Aligned.out.bam'
+    ### for expression
     cmd = "STAR --runMode alignReads --quantMode GeneCounts --runThreadN 6 --genomeDir {genomeDir} --genomeLoad LoadAndKeep --readFilesIn {fqs} --readMatesLengthsIn Equal --readFilesCommand 'zcat -1' --clip5pNbases 15 --clip3pNbases 0 --outFileNamePrefix {prefix} --outSAMtype BAM Unsorted --outSAMstrandField intronMotif --outSAMreadID Number --outFilterMultimapNmax 10 --outFilterMismatchNmax 9 --outFilterMismatchNoverLmax 0.1 --outFilterMatchNminOverLread 0.3 --outFilterScoreMinOverLread 0.3 --alignEndsType EndToEnd".format(genomeDir=STAR_index, fqs=' '.join(fqs), prefix=prefix)    
+    
+    ### for alternative splicing
+    #cmd = "STAR --runMode alignReads --runThreadN 10 --genomeDir {genomeDir} --genomeLoad NoSharedMemory --readFilesIn {fqs} --readMatesLengthsIn Equal --readFilesCommand 'zcat -1' --outFileNamePrefix {prefix} --outSAMtype BAM Unsorted --outSAMstrandField intronMotif --outSAMreadID Number --outFilterMultimapNmax 20 --outFilterMismatchNmax 9 --outFilterMismatchNoverLmax 0.1 --outFilterMatchNminOverLread 0.3 --outFilterScoreMinOverLread 0.3 --alignSJDBoverhangMin 10 --alignEndsType Local --alignSJstitchMismatchNmax 1 -1 1 1 --twopassMode Basic".format(genomeDir=STAR_index, fqs=' '.join(fqs), prefix=prefix)
+    
     print cmd
     os.system(cmd)
     sort_cmd = 'samtools sort -@ 4 -o {} {}'.format(bam, bam)
