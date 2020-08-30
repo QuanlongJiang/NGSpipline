@@ -33,7 +33,7 @@ def call_splicing(b1,b2):
 
 ### run rmats
 #bs_comb = itertools.combinations(bs,2)
-bs_comb = [['YA.txt','OA.txt'],['OA.txt','PD.txt'],['PD0.txt','PD16.txt']]
+bs_comb = [['YA.txt','OA.txt'],['PD0.txt','PD16.txt']]
 
 Parallel(n_jobs=3)(delayed(call_splicing)(b1,b2) for (b1,b2) in bs_comb)
 
